@@ -7,13 +7,13 @@ class Group(models.Model):
 
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
-    birth_date = models.DateField()
+    email = models.CharField(max_length=20)
 
     class Meta:
         db_table = "group"
 
     def get_info(self):
-        return f'{self.first_name} {self.last_name} {self.birth_date}'
+        return f'{self.first_name} {self.last_name} {self.email}'
 
     @classmethod
     def generate_group(cls):
@@ -23,12 +23,12 @@ class Group(models.Model):
 
         first_name = arr[0]
         last_name = arr[1]
-        birth_date = myFactory.date(pattern="%Y-%m-%d", end_datetime=None)
+        email = myFactory.email()
 
         group = cls(
             first_name=first_name,
             last_name=last_name,
-            birth_date=birth_date,
+            email=email,
         )
 
         group.save()
