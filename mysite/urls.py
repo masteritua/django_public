@@ -19,7 +19,10 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('lesson4', include('lesson4.urls')),
+<<<<<<< HEAD
     path('teacher', include('Teacher.urls')),
     path('group', include('Group.urls')),
+=======
+>>>>>>> 7ef5fcce5a6b49574ae56d93508b4a0457ca7ec1
     path('', include('blog.urls')),
 ]
