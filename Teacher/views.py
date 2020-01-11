@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models import Q
 # Create your views here.
 from Teacher.models import Teacher
 
@@ -7,17 +8,14 @@ def teacher(request):
     queryset = Teacher.objects.all()
     response = ""
 
-    fn = request.GET.get('first_name')
+    fltr = request.GET
 
-    if fn:
-        # LIKE %{}%
-        queryset.filter(first_name__contains=fn)
-
-    ln = request.GET.get('last_name')
-
-    if ln:
-        # LIKE %{}%
-        queryset.filter(last_name__contains=ln)
+    if len(fltr):
+        queryset = queryset.filter(
+            Q(first_name__contains=fltr.get('first_name')) |
+            Q(last_name__contains=fltr.get('last_name')) |
+            Q(email__contains=fltr.get('email'))
+        )
 
     for teacher in queryset:
         response += teacher.get_info() + "<br>"
