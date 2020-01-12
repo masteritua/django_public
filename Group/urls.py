@@ -15,8 +15,9 @@ Including another URLconf
 """
 
 from django.urls import path
-from Group.views import group
+from Group.views import group, group_add
 
 urlpatterns = [
     path('', group),
+    path('add', group_add),
 ]

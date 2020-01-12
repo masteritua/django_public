@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+        Group ADD
+    </title>
+</head>
+<body>
+<form action="/group/add/" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input name="submit" type="submit" value="Отправить">
+</form>
+</body>
+</html>
