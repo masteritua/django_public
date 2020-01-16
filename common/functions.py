@@ -22,7 +22,7 @@ def email(subject, message):
             message,
             email_from,
             recipient_list,
-            fail_silently=True
+            fail_silently=False
         )
 
         save_to_file('Письмо успешно отправилось!')
