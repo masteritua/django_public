@@ -25,7 +25,7 @@ def email(subject, message):
             fail_silently=False
         )
 
-        save_to_file('Письмо успешно отправилось!')
+        save_to_file(subject)
 
     except SMTPException as e:
 
