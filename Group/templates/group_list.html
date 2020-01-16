@@ -8,7 +8,8 @@
     </title>
 </head>
 <body>
-<form action="/group" method="GET" name="group">
+<a href="{% url 'group-add' %}">Создать пользователя группы</a>
+<form action="{% url 'group' %}" method="GET" name="group">
     <label for="first_name">Имя</label>
     <input id="first_name" type="text" name="first_name">
     <label for="last_name">Фамилия</label>
@@ -18,9 +19,13 @@
     <input type="submit" value="Фильтровать">
 </form>
 <div style="margin-top: 20px;">
-    {% autoescape off %}
-    {{group_list}}
-    {% endautoescape %}
+
+    {% for group in queryset %}
+    <div>
+        <a href="{% url 'group-edit' group.id %}">{{ group.get_info }}</a>
+    </div>
+    {% endfor %}
+
 </div>
 </body>
 </html>

@@ -8,7 +8,8 @@
     </title>
 </head>
 <body>
-<form action="/teacher" method="GET" name="teacher">
+<a href="{% url 'teacher-add' %}">Создать пользователя учителей</a>
+<form action="{% url 'teacher' %}" method="GET" name="teacher">
     <label for="first_name">Имя</label>
     <input id="first_name" type="text" name="first_name">
     <label for="last_name">Фамилия</label>
@@ -18,9 +19,13 @@
     <input type="submit" value="Фильтровать">
 </form>
 <div style="margin-top: 20px;">
-    {% autoescape off %}
-    {{teacher_list}}
-    {% endautoescape %}
+
+    {% for teacher in queryset %}
+    <div>
+        <a href="{% url 'teacher-edit' teacher.id %}">{{ teacher.get_info }}</a>
+    </div>
+    {% endfor %}
+
 </div>
 </body>
 </html>
