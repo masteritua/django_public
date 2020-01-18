@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.db.models import Q
 # Create your views here.
 from Group.models import Group
-from Group.forms import GroupAddForm, GroupEditForm
+from Group.forms import GroupAddForm, GroupEditForm, GroupListForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from common.functions import email
@@ -10,6 +10,7 @@ from common.functions import email
 
 def group(request):
     queryset = Group.objects.all()
+    form = GroupListForm()
     response = ""
 
     fltr = request.GET
@@ -23,15 +24,17 @@ def group(request):
 
     return render(request, 'group_list.html',
                   context={
+                      'form': form,
                       'group_list': response,
                       'queryset': queryset
                   })
 
 
 def group_add(request):
-    if request.method == 'POST':
 
-        post = request.POST
+    post = request.POST
+
+    if request.method == 'POST':
 
         form = GroupAddForm(request.POST)
         if form.is_valid():
@@ -43,25 +46,26 @@ def group_add(request):
             return HttpResponseRedirect(reverse('group'))
 
     else:
-        form = GroupAddForm()
+        form = GroupAddForm(initial=post)
 
     return render(request, 'group_add.html', context={"form": form})
 
 
 def group_edit(request, pk):
-    o = Group.objects.get(pk=pk)
+
+    instance = Group.objects.get(pk=pk)
 
     if request.method == 'POST':
 
         post = request.POST
 
-        form = GroupEditForm(request.POST)
+        form = GroupEditForm(request.POST, instance=instance)
 
         if form.is_valid():
-            o.first_name = post.get('first_name')
-            o.last_name = post.get('last_name')
-            o.email = post.get('email')
-            o.save()
+            form.first_name = post.get('first_name')
+            form.last_name = post.get('last_name')
+            form.email = post.get('email')
+            form.save()
 
             email(f"Редактирование сообщения № {pk}",
                   f"{post.get('first_name')} {post.get('last_name')} {post.get('email')}")
@@ -69,9 +73,14 @@ def group_edit(request, pk):
             return HttpResponseRedirect(reverse(group))
 
     else:
-        form = GroupEditForm()
+        form = GroupEditForm(
+            initial={
+                'first_name': instance.first_name,
+                'last_name': instance.last_name,
+                'email': instance.email
+            })
 
     return render(request, 'group_edit.html', context={
         "form": form,
-        "object": o,
+        'object': instance
     })

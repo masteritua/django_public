@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.db.models import Q
 # Create your views here.
 from Teacher.models import Teacher
-from Teacher.forms import TeacherAddForm, TeacherEditForm
+from Teacher.forms import TeacherAddForm, TeacherEditForm, TeacherListForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from common.functions import email
@@ -10,6 +10,7 @@ from common.functions import email
 
 def teacher(request):
     queryset = Teacher.objects.all()
+    form = TeacherListForm()
     response = ""
 
     fltr = request.GET
@@ -26,15 +27,17 @@ def teacher(request):
 
     return render(request, 'teacher_list.html',
                   context={
+                      'form': form,
                       'teacher_list': response,
                       'queryset': queryset
                   })
 
 
 def teacher_add(request):
-    if request.method == 'POST':
 
-        post = request.POST
+    post = request.POST
+
+    if request.method == 'POST':
 
         form = TeacherAddForm(request.POST)
         if form.is_valid():
@@ -46,26 +49,23 @@ def teacher_add(request):
             return HttpResponseRedirect(reverse('teacher'))
 
     else:
-        form = TeacherAddForm()
+        form = TeacherAddForm(initial=post)
 
     return render(request, 'teacher_add.html', context={"form": form})
 
 
 def teacher_edit(request, pk):
 
-    o = Teacher.objects.get(pk=pk)
+    instance = Teacher.objects.get(pk=pk)
 
     if request.method == 'POST':
 
         post = request.POST
 
-        form = TeacherEditForm(request.POST)
+        form = TeacherEditForm(request.POST, instance=instance)
 
         if form.is_valid():
-            o.first_name = post.get('first_name')
-            o.last_name = post.get('last_name')
-            o.email = post.get('email')
-            o.save()
+            form.save()
 
             email(f"Редактирование сообщения № {pk}",
                   f"{post.get('first_name')} {post.get('last_name')} {post.get('email')}")
@@ -73,9 +73,14 @@ def teacher_edit(request, pk):
             return HttpResponseRedirect(reverse(teacher))
 
     else:
-        form = TeacherEditForm()
+        form = TeacherEditForm(
+            initial={
+                'first_name': instance.first_name,
+                'last_name': instance.last_name,
+                'email': instance.email
+            })
 
     return render(request, 'teacher_edit.html', context={
         "form": form,
-        "object": o,
+        "object": instance,
     })

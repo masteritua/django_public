@@ -8,8 +8,6 @@ def save_to_file(text):
     with open(settings.EMAIL_FILE_PATH_REPORT, 'w') as f:
         myfile = File(f)
         myfile.write(text)
-    myfile.closed
-    f.closed
 
 
 def email(subject, message):

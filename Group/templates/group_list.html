@@ -10,12 +10,8 @@
 <body>
 <a href="{% url 'group-add' %}">Создать пользователя группы</a>
 <form action="{% url 'group' %}" method="GET" name="group">
-    <label for="first_name">Имя</label>
-    <input id="first_name" type="text" name="first_name">
-    <label for="last_name">Фамилия</label>
-    <input id="last_name" type="text" name="last_name">
-    <label for="email">Email</label>
-    <input id="email" type="text" name="email">
+    {% csrf_token %}
+    {{ form.as_p }}
     <input type="submit" value="Фильтровать">
 </form>
 <div style="margin-top: 20px;">
