@@ -8,20 +8,19 @@
     </title>
 </head>
 <body>
-<a href="{% url 'teacher-add' %}">Создать пользователя учителей</a>
-<form action="{% url 'teacher' %}" method="GET" name="teacher">
-    {% csrf_token %}
-    {{ form.as_p }}
+<form action="/teacher" method="GET" name="teacher">
+    <label for="first_name">Имя</label>
+    <input id="first_name" type="text" name="first_name">
+    <label for="last_name">Фамилия</label>
+    <input id="last_name" type="text" name="last_name">
+    <label for="email">Email</label>
+    <input id="email" type="text" name="email">
     <input type="submit" value="Фильтровать">
 </form>
 <div style="margin-top: 20px;">
-
-    {% for teacher in queryset %}
-    <div>
-        <a href="{% url 'teacher-edit' teacher.id %}">{{ teacher.get_info }}</a>
-    </div>
-    {% endfor %}
-
+    {% autoescape off %}
+    {{teacher_list}}
+    {% endautoescape %}
 </div>
 </body>
 </html>

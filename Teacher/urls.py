@@ -15,10 +15,9 @@ Including another URLconf
 """
 
 from django.urls import path
-from Teacher.views import teacher, teacher_add, teacher_edit
+from Teacher.views import teacher, teacher_add
 
 urlpatterns = [
-    path('', teacher, name='teacher'),
-    path('add/', teacher_add, name='teacher-add'),
-    path('edit/<int:pk>/', teacher_edit, name='teacher-edit'),
+    path('', teacher),
+    path('add', teacher_add),
 ]
