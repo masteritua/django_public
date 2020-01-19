@@ -1,16 +1,16 @@
 from django.shortcuts import render
 from django.db.models import Q
 # Create your views here.
-from Group.models import Group
-from Group.forms import GroupAddForm, GroupEditForm, GroupListForm
+from Student.models import Student
+from Student.forms import StudentAddForm, StudentEditForm, StudentListForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from common.functions import email
 
 
-def group(request):
-    queryset = Group.objects.all()
-    form = GroupListForm()
+def student(request):
+    queryset = Student.objects.all()
+    form = StudentListForm()
     response = ""
 
     fltr = request.GET
@@ -22,44 +22,44 @@ def group(request):
             Q(email__contains=fltr.get('email'))
         )
 
-    return render(request, 'group_list.html',
+    return render(request, 'student_list.html',
                   context={
                       'form': form,
-                      'group_list': response,
+                      'Student_list': response,
                       'queryset': queryset
                   })
 
 
-def group_add(request):
+def student_add(request):
 
     post = request.POST
 
     if request.method == 'POST':
 
-        form = GroupAddForm(request.POST)
+        form = StudentAddForm(request.POST)
         if form.is_valid():
             form.save()
 
             email(f"Создание сообщения",
                   f"{post.get('first_name')} {post.get('last_name')} {post.get('email')}")
 
-            return HttpResponseRedirect(reverse('group'))
+            return HttpResponseRedirect(reverse('student'))
 
     else:
-        form = GroupAddForm(initial=post)
+        form = StudentAddForm(initial=post)
 
-    return render(request, 'group_add.html', context={"form": form})
+    return render(request, 'student_add.html', context={"form": form})
 
 
-def group_edit(request, pk):
+def student_edit(request, pk):
 
-    instance = Group.objects.get(pk=pk)
+    instance = Student.objects.get(pk=pk)
 
     if request.method == 'POST':
 
         post = request.POST
 
-        form = GroupEditForm(request.POST, instance=instance)
+        form = StudentEditForm(request.POST, instance=instance)
 
         if form.is_valid():
             form.first_name = post.get('first_name')
@@ -70,17 +70,17 @@ def group_edit(request, pk):
             email(f"Редактирование сообщения № {pk}",
                   f"{post.get('first_name')} {post.get('last_name')} {post.get('email')}")
 
-            return HttpResponseRedirect(reverse(group))
+            return HttpResponseRedirect(reverse(student))
 
     else:
-        form = GroupEditForm(
+        form = StudentEditForm(
             initial={
                 'first_name': instance.first_name,
                 'last_name': instance.last_name,
                 'email': instance.email
             })
 
-    return render(request, 'group_edit.html', context={
+    return render(request, 'student_edit.html', context={
         "form": form,
         'object': instance
     })

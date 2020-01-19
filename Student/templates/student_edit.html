@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %} Редактирование группы {% endblock %}
+
+{% block content %}
+<form action="{% url 'student-edit' object.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input name="submit" type="submit" value="Сохранить">
+</form>
+{% endblock %}
