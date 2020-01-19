@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'blog',
     'lesson4',
     'Group',
-    'Teacher'
+    'Teacher',
+    'Student'
 ]
 
 MIDDLEWARE = [
