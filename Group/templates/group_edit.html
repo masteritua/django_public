@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>
-        Group Edit
-    </title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %} Редактирование группы {% endblock %}
+
+{% block content %}
 <form action="{% url 'group-edit' object.id %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input name="submit" type="submit" value="Сохранить">
 </form>
-</body>
-</html>
+{% endblock %}

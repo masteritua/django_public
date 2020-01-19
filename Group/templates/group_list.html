@@ -1,26 +1,29 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>
-        Сортировка по группе
-    </title>
-</head>
-<body>
-<form action="/group" method="GET" name="group">
-    <label for="first_name">Имя</label>
-    <input id="first_name" type="text" name="first_name">
-    <label for="last_name">Фамилия</label>
-    <input id="last_name" type="text" name="last_name">
-    <label for="email">Email</label>
-    <input id="email" type="text" name="email">
+{% block title %} Cписок группы {% endblock %}
+
+{% block content %}
+<a href="{% url 'group-add' %}">Создать пользователя группы</a>
+<form action="{% url 'group' %}" method="GET" name="group">
+    {% csrf_token %}
+    {{ form.as_p }}
     <input type="submit" value="Фильтровать">
 </form>
-<div style="margin-top: 20px;">
-    {% autoescape off %}
-    {{group_list}}
-    {% endautoescape %}
-</div>
-</body>
-</html>
+
+<table border="1">
+   <caption>Таблица списка групп</caption>
+   <tr>
+    <th>№</th>
+    <th>Инфо</th>
+    <th>Действия</th>
+   </tr>
+
+    {% for group in queryset %}
+    <tr>
+       <td>{{group.id}}</td>
+       <td>{{group.get_info}}</td>
+       <td><a href="{% url 'group-edit' group.id %}">Редактирование записи</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
