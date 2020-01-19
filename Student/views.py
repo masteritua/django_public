@@ -9,7 +9,7 @@ from common.functions import email
 
 
 def student(request):
-    queryset = Student.objects.all()
+    queryset = Student.objects.all().select_related('group')
     form = StudentListForm()
     response = ""
 
