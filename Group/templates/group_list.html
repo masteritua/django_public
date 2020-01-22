@@ -21,7 +21,11 @@
     {% for group in queryset %}
     <tr>
        <td>{{group.id}}</td>
-       <td>{{group.get_info}}</td>
+       <td>
+           {{group.get_info}}
+           {{group.get_curator}}
+           {{group.get_leader_class}}
+       </td>
        <td><a href="{% url 'group-edit' group.id %}">Редактирование записи</a></td>
     </tr>
     {% endfor %}
