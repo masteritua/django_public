@@ -3,8 +3,8 @@
 {% block title %} Cписок группы {% endblock %}
 
 {% block content %}
-<a href="{% url 'group-add' %}">Создать пользователя группы</a>
-<form action="{% url 'group' %}" method="GET" name="group">
+<a href="{% url 'student-add' %}">Создать пользователя группы</a>
+<form action="{% url 'student' %}" method="GET" name="student">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Фильтровать">
@@ -18,15 +18,11 @@
     <th>Действия</th>
    </tr>
 
-    {% for group in queryset %}
+    {% for student in queryset %}
     <tr>
-       <td>{{group.id}}</td>
-       <td>
-           {{group.get_info}}
-           {{group.get_curator}}
-           {{group.get_leader_class}}
-       </td>
-       <td><a href="{% url 'group-edit' group.id %}">Редактирование записи</a></td>
+       <td>{{student.id}}</td>
+       <td>{{student.get_info}}</td>
+       <td><a href="{% url 'student-edit' student.id %}">Редактирование записи</a></td>
     </tr>
     {% endfor %}
   </table>

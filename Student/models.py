@@ -2,19 +2,20 @@ from django.db import models
 from faker import Faker
 
 
-class Teacher(models.Model):
+class Student(models.Model):
+
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     email = models.CharField(max_length=20)
 
     class Meta:
-        db_table = "teacher"
+        db_table = "student"
 
     def get_info(self):
         return f'{self.first_name} {self.last_name} {self.email}'
 
     @classmethod
-    def generate_teacher(cls):
+    def generate_Student(cls):
         myFactory = Faker()
         name = myFactory.name()
         arr = name.split(' ')
@@ -23,11 +24,11 @@ class Teacher(models.Model):
         last_name = arr[1]
         email = myFactory.email()
 
-        teacher = cls(
+        student = cls(
             first_name=first_name,
             last_name=last_name,
             email=email,
         )
 
-        teacher.save()
-        return teacher
+        student.save()
+        return student
