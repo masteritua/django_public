@@ -22,9 +22,6 @@ def teacher(request):
             Q(email__contains=fltr.get('email'))
         )
 
-    for teacher in queryset:
-        response += teacher.get_info() + "<br>"
-
     return render(request, 'teacher_list.html',
                   context={
                       'form': form,
