@@ -1,5 +1,6 @@
 from django.db import models
 from faker import Faker
+from random import randrange
 from Teacher.models import Teacher
 from Student.models import Student
 
@@ -35,11 +36,18 @@ class Group(models.Model):
         first_name = arr[0]
         last_name = arr[1]
         email = myFactory.email()
+        teacher_id = randrange(100)
+        student_id = randrange(100)
+
+        instanceTeacher = Teacher.objects.get(pk=teacher_id)
+        instanceStudent = Student.objects.get(pk=student_id)
 
         group = cls(
             first_name=first_name,
             last_name=last_name,
             email=email,
+            teacher_id=instanceTeacher,
+            student_id=instanceStudent,
         )
 
         group.save()
