@@ -6,10 +6,9 @@ from Student.models import Student
 
 
 class Group(models.Model):
-
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
-    email = models.CharField(max_length=20)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
 
     teacher = models.ForeignKey(
         Teacher, blank=True, null=True, on_delete=models.CASCADE)
@@ -38,17 +37,21 @@ class Group(models.Model):
         last_name = arr[1]
         email = myFactory.email()
 
+        try:
 
-        instanceTeacher = Teacher.objects.get(pk=randrange(2))
-        instanceStudent = Student.objects.get(pk=randrange(2))
+            instanceTeacher = Teacher.objects.get(pk=f'{randrange(50)}')
+            instanceStudent = Student.objects.get(pk=f'{randrange(50)}')
 
-        group = cls(
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            teacher_id=instanceTeacher,
-            student_id=instanceStudent,
-        )
+            group = cls(
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                teacher=instanceTeacher,
+                student=instanceStudent,
+            )
 
-        group.save()
-        return group
+            group.save()
+            return group
+
+        except:
+            pass

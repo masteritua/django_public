@@ -4,9 +4,9 @@ from faker import Faker
 
 class Student(models.Model):
 
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
-    email = models.CharField(max_length=20)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
 
     class Meta:
         db_table = "student"
@@ -32,3 +32,6 @@ class Student(models.Model):
 
         student.save()
         return student
+
+    def __str__(self):
+        return self.get_info()
