@@ -10,6 +10,7 @@ class Group(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     email = models.CharField(max_length=20)
+
     teacher = models.ForeignKey(
         Teacher, blank=True, null=True, on_delete=models.CASCADE)
     student = models.ForeignKey(
@@ -49,6 +50,5 @@ class Group(models.Model):
             student_id=instanceStudent,
         )
 
-        breakpoint()
         group.save()
         return group
