@@ -9,7 +9,7 @@ from common.functions import email
 
 
 def group(request):
-    queryset = Group.objects.all()
+    queryset = Group.objects.select_related('teacher', 'student').all()
     form = GroupListForm()
     response = ""
 
@@ -31,7 +31,6 @@ def group(request):
 
 
 def group_add(request):
-
     post = request.POST
 
     if request.method == 'POST':
@@ -52,8 +51,7 @@ def group_add(request):
 
 
 def group_edit(request, pk):
-
-    instance = Group.objects.get(pk=pk)
+    instance = Group.objects.select_related('teacher', 'student').get(pk=pk)
 
     if request.method == 'POST':
 
