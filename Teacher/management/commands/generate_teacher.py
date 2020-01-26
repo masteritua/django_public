@@ -9,7 +9,7 @@ class Command(BaseCommand):
         parser.add_argument(
             'total',
             type=int,
-            help='Indicates the number of students to be created'
+            help='Indicates the number of teacher to be created'
         )
 
     def handle(self, **kwargs):

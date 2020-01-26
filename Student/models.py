@@ -1,15 +1,11 @@
 from django.db import models
-#from Group.models import Group
 from faker import Faker
 
 
 class Student(models.Model):
-
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.CharField(max_length=40)
-    # group = models.ForeignKey(
-    #     Group, blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         db_table = "student"
@@ -38,6 +34,3 @@ class Student(models.Model):
 
     def __str__(self):
         return self.get_info()
-
-class GroupName(models.Model):
-    pass
