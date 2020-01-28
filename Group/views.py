@@ -6,6 +6,7 @@ from Group.forms import GroupAddForm, GroupEditForm, GroupListForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from common.functions import email
+from django.shortcuts import get_object_or_404
 
 
 def group(request):
@@ -51,7 +52,7 @@ def group_add(request):
 
 
 def group_edit(request, pk):
-    instance = Group.objects.select_related('teacher', 'student').get(pk=pk)
+    instance = get_object_or_404(Group.objects.select_related('teacher', 'student'), pk=pk)
 
     if request.method == 'POST':
 
@@ -60,9 +61,6 @@ def group_edit(request, pk):
         form = GroupEditForm(request.POST, instance=instance)
 
         if form.is_valid():
-            form.first_name = post.get('first_name')
-            form.last_name = post.get('last_name')
-            form.email = post.get('email')
             form.save()
 
             email(f"Редактирование сообщения № {pk}",
@@ -71,12 +69,7 @@ def group_edit(request, pk):
             return HttpResponseRedirect(reverse(group))
 
     else:
-        form = GroupEditForm(
-            initial={
-                'first_name': instance.first_name,
-                'last_name': instance.last_name,
-                'email': instance.email
-            })
+        form = GroupEditForm(instance=instance)
 
     return render(request, 'group_edit.html', context={
         "form": form,

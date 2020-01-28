@@ -6,6 +6,7 @@ from Student.forms import StudentAddForm, StudentEditForm, StudentListForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from common.functions import email
+from django.shortcuts import get_object_or_404
 
 
 def student(request):
@@ -31,7 +32,6 @@ def student(request):
 
 
 def student_add(request):
-
     post = request.POST
 
     if request.method == 'POST':
@@ -52,8 +52,7 @@ def student_add(request):
 
 
 def student_edit(request, pk):
-
-    instance = Student.objects.get(pk=pk)
+    instance = get_object_or_404(Student, pk=pk)
 
     if request.method == 'POST':
 
@@ -62,9 +61,6 @@ def student_edit(request, pk):
         form = StudentEditForm(request.POST, instance=instance)
 
         if form.is_valid():
-            form.first_name = post.get('first_name')
-            form.last_name = post.get('last_name')
-            form.email = post.get('email')
             form.save()
 
             email(f"Редактирование сообщения № {pk}",
@@ -73,12 +69,7 @@ def student_edit(request, pk):
             return HttpResponseRedirect(reverse(student))
 
     else:
-        form = StudentEditForm(
-            initial={
-                'first_name': instance.first_name,
-                'last_name': instance.last_name,
-                'email': instance.email
-            })
+        form = StudentEditForm(instance=instance)
 
     return render(request, 'student_edit.html', context={
         "form": form,

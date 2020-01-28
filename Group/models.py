@@ -37,26 +37,20 @@ class Group(models.Model):
         last_name = arr[1]
         email = myFactory.email()
 
-        try:
+        teacher = Teacher.objects.all().order_by('?').first()
+        student = Student.objects.all().order_by('?').first()
 
-            instanceTeacher = Teacher.objects.get(pk=f'{randrange(50)}')
-            instanceStudent = Student.objects.get(pk=f'{randrange(50)}')
+        group = cls(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            teacher=teacher,
+            student=student,
+        )
 
-            group = cls(
-                first_name=first_name,
-                last_name=last_name,
-                email=email,
-                teacher=instanceTeacher,
-                student=instanceStudent,
-            )
-
-            group.save()
-            return group
-
-        except:
-            pass
-
-    def __str__(self):
-        return self.get_info()
+        group.save()
+        return group
 
 
+def __str__(self):
+    return self.get_info()
