@@ -6,6 +6,7 @@ from Teacher.forms import TeacherAddForm, TeacherEditForm, TeacherListForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from common.functions import email
+from django.shortcuts import get_object_or_404
 
 
 def teacher(request):
@@ -31,7 +32,6 @@ def teacher(request):
 
 
 def teacher_add(request):
-
     post = request.POST
 
     if request.method == 'POST':
@@ -52,8 +52,7 @@ def teacher_add(request):
 
 
 def teacher_edit(request, pk):
-
-    instance = Teacher.objects.get(pk=pk)
+    instance = get_object_or_404(Teacher, pk=pk)
 
     if request.method == 'POST':
 
@@ -70,12 +69,7 @@ def teacher_edit(request, pk):
             return HttpResponseRedirect(reverse(teacher))
 
     else:
-        form = TeacherEditForm(
-            initial={
-                'first_name': instance.first_name,
-                'last_name': instance.last_name,
-                'email': instance.email
-            })
+        form = TeacherEditForm(instance=instance)
 
     return render(request, 'teacher_edit.html', context={
         "form": form,

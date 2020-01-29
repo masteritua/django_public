@@ -4,3 +4,6 @@ venv/
 **/migrations/
 **/__pycache__/**
 **/migrations/**
+
+db.sqlite3
+tmp/log/mail.log
