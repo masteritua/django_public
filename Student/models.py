@@ -6,6 +6,7 @@ class Student(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.CharField(max_length=40)
+    phone = models.CharField(max_length=12, unique=True)
 
     class Meta:
         db_table = "student"
@@ -14,7 +15,7 @@ class Student(models.Model):
         return f'{self.first_name} {self.last_name} {self.email}'
 
     @classmethod
-    def generate_Student(cls):
+    def generate_student(cls):
         myFactory = Faker()
         name = myFactory.name()
         arr = name.split(' ')
@@ -31,6 +32,7 @@ class Student(models.Model):
 
         student.save()
         return student
+
 
     def __str__(self):
         return self.get_info()
