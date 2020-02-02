@@ -9,7 +9,7 @@ class BaseTeacherForm(ModelForm):
 
         email_exists = Teacher.objects \
             .filter(email__iexact=email) \
-            .exclude(email__iexact=self.instance.email)
+            .exclude(id=self.instance.id)
 
         if email_exists.exists():
             raise ValidationError(f'{email} is already used!')
