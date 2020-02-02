@@ -25,7 +25,9 @@ urlpatterns = [
     path('teacher/', include('Teacher.urls')),
     path('group/', include('Group.urls')),
     path('student/', include('Student.urls')),
-    path('', include('blog.urls'), name='base'),
+    path('accounts/', include('django_registration.backends.activation.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('', include('Group.urls'), name='base'),
 ]
 
 if settings.DEBUG:
