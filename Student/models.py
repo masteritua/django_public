@@ -33,6 +33,16 @@ class Student(models.Model):
         student.save()
         return student
 
-
     def __str__(self):
         return self.get_info()
+
+
+class Logger(models.Model):
+    path = models.CharField(max_length=100)
+    method = models.IntegerField(2)
+    time_delta = models.DecimalField(max_digits=5, decimal_places=3)
+    user_id = models.IntegerField()
+    created = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "Logger"

@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'Group',
     'Teacher',
     'Student',
-    'registration',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'Student.middleware.Logger',
+    'Student.middleware.LoggerMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
