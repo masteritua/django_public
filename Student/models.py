@@ -42,7 +42,7 @@ class Logger(models.Model):
     method = models.IntegerField(2)
     time_delta = models.DecimalField(max_digits=5, decimal_places=3)
     user_id = models.IntegerField()
-    created = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = "Logger"
