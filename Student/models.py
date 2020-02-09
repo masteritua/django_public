@@ -33,6 +33,7 @@ class Student(models.Model):
         student.save()
         return student
 
+
     def __str__(self):
         return self.get_info()
 
