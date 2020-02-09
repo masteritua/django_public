@@ -25,7 +25,7 @@ urlpatterns = [
     path('teacher/', include('Teacher.urls')),
     path('group/', include('Group.urls')),
     path('student/', include('Student.urls')),
-    path('', include('blog.urls'), name='base'),
+    path('', include('Group.urls'), name='base'),
 ]
 
 if settings.DEBUG:

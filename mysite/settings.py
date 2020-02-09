@@ -26,6 +26,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
 
+
+
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -36,11 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'blog',
     'lesson4',
     'Group',
     'Teacher',
-    'Student'
+    'Student',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'Student.middleware.LoggerMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -124,6 +128,9 @@ INTERNAL_IPS = [
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+ACCOUNT_ACTIVATION_DAYS = 2 # кол-во дней для хранения кода активации
+AUTH_USER_EMAIL_UNIQUE = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
