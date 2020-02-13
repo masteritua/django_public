@@ -4,7 +4,7 @@ venv/
 **/migrations/
 **/__pycache__/**
 **/migrations/**
-
+mysite/__pycache__/urls.cpython-37.pyc
 db.sqlite3
 tmp/log/mail.log
 
@@ -12,3 +12,4 @@ bin/
 env/
 lib64
 pyvenv.cfg
+*.pyc
