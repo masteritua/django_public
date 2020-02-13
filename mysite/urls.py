@@ -1,3 +1,5 @@
+import Student
+
 """mysite URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -19,6 +21,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls import include, url
 
+# Imports
+from Student import views
+from django.conf.urls.static import static
+from django.conf.urls import handler404
+from django.conf.urls import include, url
+from Student import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('lesson4', include('lesson4.urls')),
@@ -26,7 +35,11 @@ urlpatterns = [
     path('group/', include('Group.urls')),
     path('student/', include('Student.urls')),
     path('', include('Group.urls'), name='base'),
+
 ]
+
+# handler404 = views.handler404
+# handler500 = views.handler500
 
 if settings.DEBUG:
     if 'debug_toolbar' in settings.INSTALLED_APPS:
