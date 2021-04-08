@@ -3,7 +3,7 @@ backcall==0.1.0
 billiard==3.6.2.0
 celery==4.4.0
 decorator==4.4.1
-Django==2.2.10
+Django==2.2.20
 django-debug-toolbar==2.1
 entrypoints==0.3
 Faker==3.0.0
